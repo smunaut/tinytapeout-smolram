@@ -1,6 +1,9 @@
 # Create a clock from the internal io_in[0] @ 10 MHz
 create_clock [get_pins "\user_module.in_clk_slow_I/Q"] -name clk_slow -period 100
 
+set_false_path -to [get_pins "\user_module.ram_I.data_le_n_I/*"]
+set_false_path -to [get_pins "\user_module.ram_I.wpulse_I.wpulse_I*/*"]
+
 # Create a clock for the scan chain @ 200 MHz
 create_clock -name clk_scan_in -period 5 [get_ports {clk_in}]
 create_generated_clock -name clk_scan_out -source clk_in -combinational [get_ports {clk_out}]
