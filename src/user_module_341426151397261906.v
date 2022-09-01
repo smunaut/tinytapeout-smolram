@@ -298,6 +298,8 @@ module ram_top_341426151397261906 #(
 		for (i=0; i<16; i=i+1)
 		begin : store_cell_loop
 
+			wire [W-1:0] l_store_data;
+
 			sky130_fd_sc_hd__dlxtp_1 store_cell_I[W-1:0] (
 `ifdef WITH_POWER
 				.VPWR   (1'b1),
@@ -305,8 +307,10 @@ module ram_top_341426151397261906 #(
 `endif
 				.D      (store_in),
 				.GATE   (store_gate[i]),
-				.Q      (store_data[i])
+				.Q      (l_store_data)
 			);
+
+			assign store_data[i] = l_store_data;
 
 		end
 	endgenerate
@@ -351,7 +355,17 @@ module ram_top_341426151397261906 #(
 		for (i=0; i<16; i=i+4)
 		begin : rdata_sel_loop
 
+			wire [W-1:0] l_in0_mux;
+			wire [W-1:0] l_in1_mux;
+			wire [W-1:0] l_in2_mux;
+			wire [W-1:0] l_in3_mux;
 			wire [W-1:0] l_out_mux;
+
+			// Pickup data
+			assign l_in0_mux = store_data[i+0];
+			assign l_in1_mux = store_data[i+1];
+			assign l_in2_mux = store_data[i+2];
+			assign l_in3_mux = store_data[i+3];
 
 			// Generate mux4 for each group
 			sky130_fd_sc_hd__mux4_1 rdata_mux_I[W-1:0] (
@@ -359,10 +373,10 @@ module ram_top_341426151397261906 #(
 				.VPWR (1'b1),
 				.VGND (1'b0),
 `endif
-				.A0   (store_data[i+0]),
-				.A1   (store_data[i+1]),
-				.A2   (store_data[i+2]),
-				.A3   (store_data[i+3]),
+				.A0   (l_in0_mux),
+				.A1   (l_in1_mux),
+				.A2   (l_in2_mux),
+				.A3   (l_in3_mux),
 				.X    (l_out_mux),
 				.S0   (raddr_r[0]),
 				.S1   (raddr_r[1])
