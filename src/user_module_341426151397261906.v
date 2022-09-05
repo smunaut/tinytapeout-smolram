@@ -187,6 +187,14 @@ module user_module_341426151397261906 (
 		.clk   (clk_slow)
 	);
 
+
+	// Fixed output
+	// ------------
+
+	assign eio_out[31:24] = 8'ha5;
+	assign eio_out[23:16] = eio_in[11:4];
+	assign eio_out[15: 8] = eio_in[19:12];
+
 endmodule // user_module_341426151397261906
 
 
