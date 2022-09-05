@@ -2,6 +2,7 @@
 create_clock [get_pins "\user_module.in_clk_slow_I/Q"] -name clk_slow -period 100
 
 set_false_path -to [get_pins "\user_module.ram_I.data_le_n_I/*"]
+set_false_path -to [get_pins "\user_module.ram_I.wpulse_I.pulse_I*/*"]
 set_false_path -to [get_pins "\user_module.ram_I.wpulse_I.wpulse_I*/*"]
 
 # Create a clock for the scan chain @ 200 MHz
