@@ -53,4 +53,4 @@ set ::env(GND_NETS) [list {vssd1}]
 
 # disable resizing
 set ::env(PL_RESIZER_DESIGN_OPTIMIZATIONS) {0}
-set ::env(PL_RESIZER_TIMING_OPTIMIZATIONS) {0}
+#set ::env(PL_RESIZER_TIMING_OPTIMIZATIONS) {0}
