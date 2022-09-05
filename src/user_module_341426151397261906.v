@@ -332,14 +332,24 @@ module ram_top_341426151397261906 #(
 		// Maybe we could get away with some latches, but for timing
 		// analysis PoV it's easier to have termination point that are FFs
 
-	sky130_fd_sc_hd__dfxtp_1 raddr_reg_I[3:0] (
+	sky130_fd_sc_hd__dfxtp_1 raddr_reg_msb_I[1:0] (
 `ifdef WITH_POWER
 		.VPWR (1'b1),
 		.VGND (1'b0),
 `endif
 		.CLK  (clk),
-		.D    (raddr),
-		.Q    (raddr_r)
+		.D    (raddr[3:2]),
+		.Q    (raddr_r[3:2])
+	);
+
+	sky130_fd_sc_hd__dfxtp_4 raddr_reg_lsb_I[1:0] (
+`ifdef WITH_POWER
+		.VPWR (1'b1),
+		.VGND (1'b0),
+`endif
+		.CLK  (clk),
+		.D    (raddr[1:0]),
+		.Q    (raddr_r[1:0])
 	);
 
 	sky130_fd_sc_hd__dfxtp_1 re_reg_I (
